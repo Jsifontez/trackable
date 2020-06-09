@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import {v4 as uuidv4 } from 'uuid'
+import Habits from '../components/habit-list'
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("")
@@ -23,9 +24,7 @@ export default function Home() {
     setInputValue(e.target.value)
   }
 
-  const deleteHabit = (id, e) => {
-    const habitIndex = habits.indexOf(id)
-    
+  const deleteHabit = (id) => {
     setHabits(habits.filter(habit => habit.id !== id))
   }
 
@@ -64,31 +63,7 @@ export default function Home() {
               <span role="img" aria-label="cross emoji">❌</span> Discard
             </button>
           </form>
-          <div className="habits">
-            <h2>This are the lists of habits that you want develop</h2>
-            <ul>
-              {habits.length > 0 ? (
-                  habits.map(habit => (
-                    <li key={habit.id} className="habit">
-                      {habit.title}
-                      <span
-                        className="habit--remove"
-                        role="img"
-                        aria-label="cross emoji"
-                        onClick={(e) => deleteHabit(habit.id, e) }
-                      >
-                        ❌
-                      </span>
-                    </li>
-                  ))
-                ) : (
-                  <li className="habit">
-                    <strong>You need add habits</strong>
-                  </li>
-                )
-              }
-            </ul>
-          </div>
+          <Habits habits={habits} deleteHabit={deleteHabit} />
         </div>
       </main>
 
@@ -141,25 +116,6 @@ export default function Home() {
 
           max-width: 800px;
           margin-top: 3rem;
-        }
-
-        .habits {
-          margin-top: 1.5rem;
-          text-align: center;
-        }
-
-        .habits ul {
-          margin: 0;
-          padding-left: 0;
-        }
-
-        .habit {
-          margin-top: 1rem;
-          display: block;
-        }
-
-        .habit--remove {
-          cursor: pointer;
         }
 
         @media (max-width: 600px) {
