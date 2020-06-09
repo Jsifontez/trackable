@@ -2,26 +2,13 @@ import { useState } from 'react'
 import Head from 'next/head'
 import {v4 as uuidv4 } from 'uuid'
 import Habits from '../components/habit-list'
+import NewHabitForm from '../components/new-habit-form'
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState("")
   const [habits, setHabits] = useState([])
 
-  const addHabit = (e) => {
-    e.preventDefault()
-
-    inputValue === "" ? null : setHabits([...habits, { title: e.target[0].value, id: uuidv4() }])
-
-    setInputValue("")
-  }
-
-  const discardHabit = (e) => {
-    e.preventDefault()
-    setInputValue("")
-  }
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value)
+  const addHabit = (title) => {
+    title === "" ? null : setHabits([...habits, { title, id: uuidv4() }])
   }
 
   const deleteHabit = (id) => {
@@ -45,24 +32,7 @@ export default function Home() {
         </p>
 
         <div className="grid">
-          <form onSubmit={addHabit}>
-            <label htmlFor="habit">Habit: {" "}
-              <input
-                id="habit"
-                type="text"
-                value={inputValue}
-                placeholder="enter your habit to develop"
-                onChange={handleInputChange}
-              />
-            </label>
-            <br/>
-            <button type="submit">
-              <span role="img" aria-label="plus emoji">➕</span> Add
-            </button>
-            <button typle="submit" onClick={discardHabit}>
-              <span role="img" aria-label="cross emoji">❌</span> Discard
-            </button>
-          </form>
+          <NewHabitForm addHabit={addHabit} />
           <Habits habits={habits} deleteHabit={deleteHabit} />
         </div>
       </main>
