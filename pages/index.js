@@ -1,63 +1,96 @@
+import { useState } from 'react'
 import Head from 'next/head'
+import {v4 as uuidv4 } from 'uuid'
 
 export default function Home() {
+  const [inputValue, setInputValue] = useState("")
+  const [habits, setHabits] = useState([])
+
+  const addHabit = (e) => {
+    e.preventDefault()
+
+    inputValue === "" ? null : setHabits([...habits, { title: e.target[0].value, id: uuidv4() }])
+
+    setInputValue("")
+  }
+
+  const discardHabit = (e) => {
+    e.preventDefault()
+    setInputValue("")
+  }
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value)
+  }
+
+  const deleteHabit = (id, e) => {
+    const habitIndex = habits.indexOf(id)
+    
+    setHabits(habits.filter(habit => habit.id !== id))
+  }
+
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Trackable App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to Trackable App
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          Lets start to add daily habits
         </p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <form onSubmit={addHabit}>
+            <label htmlFor="habit">Habit: {" "}
+              <input
+                id="habit"
+                type="text"
+                value={inputValue}
+                placeholder="enter your habit to develop"
+                onChange={handleInputChange}
+              />
+            </label>
+            <br/>
+            <button type="submit">
+              <span role="img" aria-label="plus emoji">➕</span> Add
+            </button>
+            <button typle="submit" onClick={discardHabit}>
+              <span role="img" aria-label="cross emoji">❌</span> Discard
+            </button>
+          </form>
+          <div className="habits">
+            <h2>This are the lists of habits that you want develop</h2>
+            <ul>
+              {habits.length > 0 ? (
+                  habits.map(habit => (
+                    <li key={habit.id} className="habit">
+                      {habit.title}
+                      <span
+                        className="habit--remove"
+                        role="img"
+                        aria-label="cross emoji"
+                        onClick={(e) => deleteHabit(habit.id, e) }
+                      >
+                        ❌
+                      </span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="habit">
+                    <strong>You need add habits</strong>
+                  </li>
+                )
+              }
+            </ul>
+          </div>
         </div>
       </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
 
       <style jsx>{`
         .container {
@@ -67,6 +100,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background-color: white;
         }
 
         main {
@@ -78,39 +112,9 @@ export default function Home() {
           align-items: center;
         }
 
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
         a {
           color: inherit;
           text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
         }
 
         .title {
@@ -129,57 +133,33 @@ export default function Home() {
           font-size: 1.5rem;
         }
 
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
         .grid {
           display: flex;
           align-items: center;
           justify-content: center;
-          flex-wrap: wrap;
+          flex-direction: column;
 
           max-width: 800px;
           margin-top: 3rem;
         }
 
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
+        .habits {
+          margin-top: 1.5rem;
+          text-align: center;
         }
 
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
+        .habits ul {
           margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
+          padding-left: 0;
         }
 
-        .logo {
-          height: 1em;
+        .habit {
+          margin-top: 1rem;
+          display: block;
+        }
+
+        .habit--remove {
+          cursor: pointer;
         }
 
         @media (max-width: 600px) {
