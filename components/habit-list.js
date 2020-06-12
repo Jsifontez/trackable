@@ -1,53 +1,103 @@
-import React from 'react'
+import React from 'react';
 
 const HabitList = ({ habits, deleteHabit }) => {
   return (
-    <section className="habits">
-      <h2>This are the lists of habits that you want develop</h2>
-      <ul>
-        {habits.length > 0 ? (
-            habits.map(habit => (
-              <li key={habit.id} className="habit">
-                {habit.title}
-                <span
-                  className="habit--remove"
-                  role="img"
-                  aria-label="cross emoji"
-                  onClick={(e) => deleteHabit(habit.id) }
-                >
-                  ❌
-                </span>
-              </li>
-            ))
-          ) : (
-            <li className="habit">
-              <strong>You need add habits</strong>
-            </li>
-          )
-        }
-      </ul>
+    <div style={{
+      gridColumn: '1/33',
+      margin: 0,
+      padding: '1rem 0',
+      minWidth: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-evenly'
+    }}
+    >
+      {habits.map(habit => (
+        <li key={habit.id} className="habit">
+          <span className="habit__title">
+            {habit.title} {" "}
+            <span
+              className="habit--remove"
+              role="img"
+              aria-label="cross emoji"
+              onClick={(e) => deleteHabit(habit.id) }
+            >
+              ❌
+            </span>
+          </span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
+          <span className="habit__day"></span>
 
-      <style jsx>{`
-        .habits {
-          margin-top: 1.5rem;
-          text-align: center;
-        }
+          <style jsx>{`
+            .habit__list{
+              grid-column: 1/33;
+              margin: 0;
+              padding: 1rem 0;
+              min-width: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-evenly;
+            }
 
-        .habits ul {
-          margin: 0;
-          padding-left: 0;
-        }
+            .habit--remove {
+              cursor: pointer;
+            }
 
-        .habit {
-          margin-top: 1rem;
-          display: block;
-        }
+            .habit {
+              min-height: 2rem;
+              align-self: start;
+              min-width: 100%;
+              margin: 5px 0 0;
+              display: grid;
+              grid-template-columns: repeat(32, 1fr);
+              grid-gap: 1em;
+            }
 
-        .habit--remove {
-          cursor: pointer;
-        }
-      `}</style>
-    </section>
+            .habit__title {
+              width: 15rem;
+              grid-column: 1/2;
+            }
+
+            .habit > .habit__day {
+              display: inline-block;
+              width: 2rem;
+              height: 2rem;
+              background-color: white;
+            }
+          `}</style>
+
+        </li>
+      ))}
+    </div>
   )
 }
 

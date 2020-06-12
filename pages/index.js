@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import {v4 as uuidv4 } from 'uuid'
-import Habits from '../components/habit-list'
+import Habits from '../components/habits'
 import NewHabitForm from '../components/new-habit-form'
 
 export default function Home() {
