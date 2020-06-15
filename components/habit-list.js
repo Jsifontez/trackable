@@ -1,6 +1,18 @@
 import React from 'react';
 
 const HabitList = ({ habits, deleteHabit }) => {
+
+  const changeStatus = (ev) => {
+    const listOfClasses = ev.target.classList
+    if (listOfClasses.contains('is--done')) {
+      listOfClasses.replace('is--done', 'not--done')
+    } else if (listOfClasses.contains('not--done')){
+      listOfClasses.replace('not--done', 'is--done')
+    } else {
+      listOfClasses.add('is--done')
+    }
+  }
+
   return (
     <div style={{
       gridColumn: '1/33',
@@ -25,37 +37,37 @@ const HabitList = ({ habits, deleteHabit }) => {
               ❌
             </span>
           </span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
-          <span className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
+          <span onClick={changeStatus} className="habit__day"></span>
 
           <style jsx>{`
             .habit__list{
@@ -87,11 +99,19 @@ const HabitList = ({ habits, deleteHabit }) => {
               grid-column: 1/2;
             }
 
-            .habit > .habit__day {
-              display: inline-block;
+            .habit__day {
               width: 2rem;
               height: 2rem;
+              cursor: pointer;
+              display: inline-block;
               background-color: white;
+            }
+
+            .habit__day.is--done {
+              background-color: lightgreen;
+            }
+            .habit__day.not--done {
+              background-color: red;
             }
           `}</style>
 
