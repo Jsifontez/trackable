@@ -2,6 +2,14 @@ import React from 'react'
 import HabitList from './habit-list'
 
 const Habits = ({ habits, deleteHabit }) => {
+  const selectMonth = (ev) => {
+    ev.target.parentNode.childNodes.forEach( child => {
+      if (child.classList.contains('selected')) child.classList.remove('selected')
+    })
+    ev.target.classList.add('selected')
+    console.log(ev.target.innerText)
+  }
+
   return (
     <section className="habits">
       <h2>This are the lists of habits that you want develop</h2>
@@ -13,18 +21,18 @@ const Habits = ({ habits, deleteHabit }) => {
                 <span>Months</span>
               </div>
               <div className="months">
-                <span className="month">Jan</span>
-                <span className="month">Feb</span>
-                <span className="month">Mar</span>
-                <span className="month">Apr</span>
-                <span className="month">May</span>
-                <span className="month">Jun</span>
-                <span className="month">Jul</span>
-                <span className="month">Aug</span>
-                <span className="month">Sep</span>
-                <span className="month">Oct</span>
-                <span className="month">Nov</span>
-                <span className="month">Dec</span>
+                <span className="month" onClick={selectMonth}>Jan</span>
+                <span className="month" onClick={selectMonth}>Feb</span>
+                <span className="month" onClick={selectMonth}>Mar</span>
+                <span className="month" onClick={selectMonth}>Apr</span>
+                <span className="month" onClick={selectMonth}>May</span>
+                <span className="month" onClick={selectMonth}>Jun</span>
+                <span className="month" onClick={selectMonth}>Jul</span>
+                <span className="month" onClick={selectMonth}>Aug</span>
+                <span className="month" onClick={selectMonth}>Sep</span>
+                <span className="month" onClick={selectMonth}>Oct</span>
+                <span className="month" onClick={selectMonth}>Nov</span>
+                <span className="month" onClick={selectMonth}>Dec</span>
               </div>
               <div className="habits__label label__element">
                 <span>Habits</span>
@@ -110,6 +118,14 @@ const Habits = ({ habits, deleteHabit }) => {
         .months__label {
           grid-column: 1/2;
           grid-row: 2;
+        }
+
+        .month {
+          cursor: pointer;
+        }
+
+        .month.selected {
+          font-weight: bold;
         }
 
         .habits__label{
