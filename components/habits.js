@@ -1,13 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import HabitList from './habit-list'
 
 const Habits = ({ habits, deleteHabit }) => {
+  const [monthDays, setMonthDays] = useState(0);
+
+  const monthsIndex = {
+    Jan: 0,
+    Feb: 1,
+    Mar: 2,
+    Apr: 3,
+    May: 4,
+    Jun: 5,
+    Jul: 6,
+    Aug: 7,
+    Sep: 8,
+    Oct: 9,
+    Nov: 10,
+    Dic: 11
+  }
+
   const selectMonth = (ev) => {
+    const month = ev.target.innerText
+    const year = new Date().getFullYear()
+    const days = 32 - new Date(year, monthsIndex[month], 32).getDate()
+
     ev.target.parentNode.childNodes.forEach( child => {
       if (child.classList.contains('selected')) child.classList.remove('selected')
     })
     ev.target.classList.add('selected')
-    console.log(ev.target.innerText)
+    setMonthDays(days)
   }
 
   return (
